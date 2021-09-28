@@ -11,7 +11,9 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text('Login Page'),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12.0),
         child: Form(
@@ -24,6 +26,10 @@ class _LoginViewState extends State<LoginView> {
             ),
             TextFormField(
               decoration: inputDecoration('Password', Icons.lock),
+            ),
+            ElevatedButton(
+              onPressed: () {},
+              child: Text('Login'),
             )
           ]),
         ),
