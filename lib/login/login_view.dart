@@ -1,4 +1,6 @@
+import 'package:auth_manager/login/login_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -8,6 +10,12 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
+  final GlobalKey<FormState> formKey = GlobalKey();
+  LoginViewModel _viewModel = Get.put(LoginViewModel());
+
+  TextEditingController emailCtr = TextEditingController();
+  TextEditingController passwordCtr = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,18 +25,36 @@ class _LoginViewState extends State<LoginView> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12.0),
         child: Form(
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          key: formKey,
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             TextFormField(
+              controller: emailCtr,
+              validator: (value) {
+                return (value == null || value.isEmpty)
+                    ? 'Please Enter Email'
+                    : null;
+              },
               decoration: inputDecoration('E-mail', Icons.person),
             ),
             SizedBox(
               height: 8,
             ),
             TextFormField(
+              validator: (value) {
+                return (value == null || value.isEmpty)
+                    ? 'Please Enter Password'
+                    : null;
+              },
+              controller: passwordCtr,
               decoration: inputDecoration('Password', Icons.lock),
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                if (formKey.currentState?.validate() ?? false) {
+                  _viewModel.fetchLogin(emailCtr.text, passwordCtr.text);
+                }
+              },
               child: Text('Login'),
             )
           ]),
@@ -59,6 +85,12 @@ InputDecoration inputDecoration(String labelText, IconData iconData,
         borderRadius: BorderRadius.circular(30),
         borderSide: BorderSide(color: Colors.black)),
     focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(30),
+        borderSide: BorderSide(color: Colors.black)),
+    errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(30),
+        borderSide: BorderSide(color: Colors.black)),
+    border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(30),
         borderSide: BorderSide(color: Colors.black)),
   );
