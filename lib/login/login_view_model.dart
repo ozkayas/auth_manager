@@ -1,8 +1,11 @@
+import 'package:auth_manager/core/cache_manager.dart';
+import 'package:auth_manager/home_view.dart';
 import 'package:auth_manager/login/model/login_request_model.dart';
 import 'package:auth_manager/login/service/login_service.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
-class LoginViewModel extends GetxController {
+class LoginViewModel extends GetxController with CacheManager {
   late final LoginService _loginService;
 
   @override
@@ -17,8 +20,12 @@ class LoginViewModel extends GetxController {
 
     if (response != null) {
       //Response will be cached
-
-      // Navigate to home view
+      saveToken(response.token ?? '');
     }
+  }
+
+  void navigateToHome() {
+    // Navigate to home view
+    Get.to(() => HomeView());
   }
 }
