@@ -1,4 +1,5 @@
 import 'package:auth_manager/login/login_view.dart';
+import 'package:auth_manager/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.purple,
       ),
-      home: LoginView(),
+      home: SplashView(),
     );
   }
 }
