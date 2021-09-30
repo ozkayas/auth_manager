@@ -21,6 +21,7 @@ class LoginViewModel extends GetxController with CacheManager {
     if (response != null) {
       //Response will be cached
       saveToken(response.token ?? '');
+      navigateToHome();
     }
   }
 

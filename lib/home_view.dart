@@ -11,6 +11,12 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Home'),
+        actions: [
+          IconButton(onPressed: null, icon: Icon(Icons.logout_rounded))
+        ],
+      ),
       body: Center(
         child: Text('HOME VIEW'),
       ),

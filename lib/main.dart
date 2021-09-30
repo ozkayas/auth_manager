@@ -1,6 +1,7 @@
 import 'package:auth_manager/login/login_view.dart';
 import 'package:auth_manager/splash_view.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 void main() async {
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Authentication Manager',
       theme: ThemeData(
         primarySwatch: Colors.purple,

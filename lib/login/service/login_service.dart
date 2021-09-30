@@ -8,7 +8,7 @@ class LoginService extends GetConnect {
   //final String path = '/api/login';
 
   Future<LoginResponseModel?> fetchLogin(LoginRequestModel model) async {
-    final response = await post(baseUrl, model.toJson());
+    final response = await post(loginUrl, model.toJson());
 
     if (response.statusCode == HttpStatus.ok) {
       return LoginResponseModel.fromJson(response.body);
