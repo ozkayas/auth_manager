@@ -9,7 +9,7 @@ GetX is used for:
 - Dialogs
 
 
-- [Related Medium Story](https://medium.com/p/de3d0313d5ae)
+- [Related Medium Story](https://medium.com/@suatozkaya/flutter-getx-basic-authentication-flow-de3d0313d5ae)
 
 
 For help getting started with Flutter:
