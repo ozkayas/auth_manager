@@ -21,7 +21,7 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login Page'),
+        title: _formType == FormType.login ? Text('Login') : Text('Register'),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12.0),
