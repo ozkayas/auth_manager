@@ -19,9 +19,7 @@ class _HomeViewState extends State<HomeView> {
         actions: [
           IconButton(
               onPressed: () {
-                //_authManager.isLogged.value = false;
                 _authManager.logOut();
-                //Get.back();
               },
               icon: Icon(Icons.logout_rounded))
         ],

@@ -1,4 +1,3 @@
-import 'package:auth_manager/core/authentication_manager.dart';
 import 'package:auth_manager/login/login_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,10 +12,10 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   final GlobalKey<FormState> formKey = GlobalKey();
   LoginViewModel _viewModel = Get.put(LoginViewModel());
-  AuthenticationManager _auth = Get.put(AuthenticationManager());
 
   TextEditingController emailCtr = TextEditingController();
   TextEditingController passwordCtr = TextEditingController();
+  FormType _formType = FormType.login;
 
   @override
   Widget build(BuildContext context) {
@@ -26,43 +25,111 @@ class _LoginViewState extends State<LoginView> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12.0),
-        child: Form(
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          key: formKey,
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            TextFormField(
-              controller: emailCtr,
-              validator: (value) {
-                return (value == null || value.isEmpty)
-                    ? 'Please Enter Email'
-                    : null;
-              },
-              decoration: inputDecoration('E-mail', Icons.person),
-            ),
-            SizedBox(
-              height: 8,
-            ),
-            TextFormField(
-              validator: (value) {
-                return (value == null || value.isEmpty)
-                    ? 'Please Enter Password'
-                    : null;
-              },
-              controller: passwordCtr,
-              decoration: inputDecoration('Password', Icons.lock),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                if (formKey.currentState?.validate() ?? false) {
-                  //_auth.login();
-                  await _viewModel.loginUser(emailCtr.text, passwordCtr.text);
-                }
-              },
-              child: Text('Login'),
-            )
-          ]),
-        ),
+        child: _formType == FormType.login ? loginForm() : registerForm(),
       ),
+    );
+  }
+
+  Form loginForm() {
+    return Form(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      key: formKey,
+      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        TextFormField(
+          controller: emailCtr,
+          validator: (value) {
+            return (value == null || value.isEmpty)
+                ? 'Please Enter Email'
+                : null;
+          },
+          decoration: inputDecoration('E-mail', Icons.person),
+        ),
+        SizedBox(
+          height: 8,
+        ),
+        TextFormField(
+          validator: (value) {
+            return (value == null || value.isEmpty)
+                ? 'Please Enter Password'
+                : null;
+          },
+          controller: passwordCtr,
+          decoration: inputDecoration('Password', Icons.lock),
+        ),
+        ElevatedButton(
+          onPressed: () async {
+            if (formKey.currentState?.validate() ?? false) {
+              await _viewModel.loginUser(emailCtr.text, passwordCtr.text);
+            }
+          },
+          child: Text('Login'),
+        ),
+        TextButton(
+          onPressed: () {
+            setState(() {
+              _formType = FormType.register;
+            });
+          },
+          child: Text('Does not have an account?'),
+        )
+      ]),
+    );
+  }
+
+  Form registerForm() {
+    return Form(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      key: formKey,
+      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        TextFormField(
+          controller: emailCtr,
+          validator: (value) {
+            return (value == null || value.isEmpty)
+                ? 'Please Enter Email'
+                : null;
+          },
+          decoration: inputDecoration('E-mail', Icons.person),
+        ),
+        SizedBox(
+          height: 8,
+        ),
+        TextFormField(
+          validator: (value) {
+            return (value == null || value.isEmpty)
+                ? 'Please Enter Password'
+                : null;
+          },
+          controller: passwordCtr,
+          decoration: inputDecoration('Password', Icons.lock),
+        ),
+        SizedBox(
+          height: 8,
+        ),
+        TextFormField(
+          validator: (value) {
+            return (value == null || value.isEmpty || value != passwordCtr.text)
+                ? 'Passwords does not match'
+                : null;
+          },
+          decoration: inputDecoration('Retype Password', Icons.lock),
+        ),
+        ElevatedButton(
+          onPressed: () async {
+            if (formKey.currentState?.validate() ?? false) {
+              await _viewModel.registerUser(emailCtr.text, passwordCtr.text);
+            }
+          },
+          child: Text('Register'),
+        ),
+        TextButton(
+          onPressed: () {
+            setState(() {
+              _formType = FormType.login;
+            });
+          },
+          child: Text('Login'),
+        )
+      ]),
     );
   }
 }
@@ -96,3 +163,5 @@ InputDecoration inputDecoration(String labelText, IconData iconData,
         borderSide: BorderSide(color: Colors.black)),
   );
 }
+
+enum FormType { login, register }
