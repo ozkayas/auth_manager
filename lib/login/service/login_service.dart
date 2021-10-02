@@ -3,6 +3,8 @@ import 'package:auth_manager/login/model/login_response_model.dart';
 import 'package:get/get_connect.dart';
 import 'package:get/get_connect/http/src/status/http_status.dart';
 
+/// LoginService responsible to communicate with web-server
+/// via authenticaton related APIs
 class LoginService extends GetConnect {
   final String loginUrl = 'https://reqres.in/api/login';
   //final String path = '/api/login';

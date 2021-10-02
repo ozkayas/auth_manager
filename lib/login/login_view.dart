@@ -1,3 +1,4 @@
+import 'package:auth_manager/core/authentication_manager.dart';
 import 'package:auth_manager/login/login_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,6 +13,7 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   final GlobalKey<FormState> formKey = GlobalKey();
   LoginViewModel _viewModel = Get.put(LoginViewModel());
+  AuthenticationManager _auth = Get.put(AuthenticationManager());
 
   TextEditingController emailCtr = TextEditingController();
   TextEditingController passwordCtr = TextEditingController();
@@ -50,9 +52,10 @@ class _LoginViewState extends State<LoginView> {
               decoration: inputDecoration('Password', Icons.lock),
             ),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 if (formKey.currentState?.validate() ?? false) {
-                  _viewModel.fetchLogin(emailCtr.text, passwordCtr.text);
+                  //_auth.login();
+                  await _viewModel.loginUser(emailCtr.text, passwordCtr.text);
                 }
               },
               child: Text('Login'),
@@ -72,8 +75,6 @@ InputDecoration inputDecoration(String labelText, IconData iconData,
     labelText: labelText,
     labelStyle: TextStyle(color: Colors.grey),
     fillColor: Colors.grey.shade200,
-    //fillColor: Constant.kTextFielColor,
-    //hintText: labelText,
     filled: true,
     prefixText: prefix,
     prefixIcon: Icon(

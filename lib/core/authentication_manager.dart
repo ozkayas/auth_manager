@@ -3,16 +3,23 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/get.dart';
 
 class AuthenticationManager extends GetxController with CacheManager {
-  var isLogin = false.obs;
+  final isLogged = false.obs;
 
   void logOut() {
-    isLogin.value = false;
+    isLogged.value = false;
+    removeToken();
+  }
+
+  void login(String? token) async {
+    isLogged.value = true;
+    //Token is cached
+    await saveToken(token);
   }
 
   void checkLoginStatus() {
     final token = getToken();
     if (token != null) {
-      isLogin.value = true;
+      isLogged.value = true;
     }
   }
 }
